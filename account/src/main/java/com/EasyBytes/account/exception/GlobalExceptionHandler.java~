@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @ControllerAdvice
 public class GlobalExceptionHandler  extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(CustomerAlreadyExistException.class)
+    @ExceptionHandler()
     public ResponseEntity<ErrorResponseDTO> handleResourceNotFoundException(CustomerAlreadyExistException exception,
                                                                             WebRequest webRequest) {
         ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO(
