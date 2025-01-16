@@ -1,16 +1,15 @@
 package com.EasyBytes.account.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 @Getter@Setter@ToString@NoArgsConstructor@AllArgsConstructor
+@Entity
 public class Account extends BaseEntities {
-    @Id
-    private long customer_id;
+    @Column(name="customer_idf")
+    private long customerIdf;
+
     @Column(name="account_number")
     @Id
     private Long accountNumber;

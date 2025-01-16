@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 class AccountController {
     private IAccountService iAccountService;
     public ResponseEntity<ResponseDTO> createAccount(@RequestBody CustomerDTO customerDTO) {
-        
+        iAccountService.CreateAccount(customerDTO);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new ResponseDTO(AccountsConstants.STATUS_201, AccountsConstants.MESSAGE_201));

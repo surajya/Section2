@@ -9,10 +9,10 @@ import com.EasyBytes.account.mapper.CustomerMapper;
 import com.EasyBytes.account.repository.AccountRepository;
 import com.EasyBytes.account.repository.CustomerRepository;
 import com.EasyBytes.account.service.IAccountService;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
@@ -26,10 +26,12 @@ public class AccountServiceImpl implements IAccountService {
     @Override
     public void CreateAccount(CustomerDTO customerDTO) {
         Customer customer=CustomerMapper.mapToCustomer(customerDTO, new Customer());
-        Optional<Customer> customerOptional = customerRepository.findByMobile_number(customerDTO.getMobile_number());
+        Optional<Customer> customerOptional = customerRepository.findByMobileNumber(customerDTO.getMobileNumber());
         if (customerOptional.isPresent()) {
-            throw new CustomerAlreadyExistException("Customer is already exist with mobile number " + customerDTO.getMobile_number());
+            throw new CustomerAlreadyExistException("Customer is already exist with mobile number " + customerDTO.getMobileNumber());
         }
+        customer.setCreatedAt(LocalDateTime.now());
+        customer.setCreatedBy("ByAdmin34");
         Customer customerSave = customerRepository.save(customer);
         accountRepository.save(createNewAccount(customerSave));
 
@@ -37,12 +39,14 @@ public class AccountServiceImpl implements IAccountService {
 
     private Account createNewAccount(Customer customer) {
         Account newAccount = new Account();
-        newAccount.setCustomer_id(customer.getCustomer_id());
+        newAccount.setCustomerIdf(customer.getCustomerId());
         long randomAccNumber = 1000000000L + new Random().nextInt(900000000);
 
         newAccount.setAccountNumber(randomAccNumber);
         newAccount.setAccountType(AccountsConstants.SAVINGS);
         newAccount.setBranchAddress(AccountsConstants.ADDRESS);
+        newAccount.setCreatedAt(LocalDateTime.now());
+        newAccount.setCreatedBy("ByAdmin");
         return newAccount;
     }
 }
