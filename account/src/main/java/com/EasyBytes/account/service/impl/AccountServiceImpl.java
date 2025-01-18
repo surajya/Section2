@@ -1,10 +1,13 @@
 package com.EasyBytes.account.service.impl;
 
 import com.EasyBytes.account.constant.AccountsConstants;
+import com.EasyBytes.account.dto.AccountDTO;
 import com.EasyBytes.account.dto.CustomerDTO;
 import com.EasyBytes.account.entities.Account;
 import com.EasyBytes.account.entities.Customer;
 import com.EasyBytes.account.exception.CustomerAlreadyExistException;
+import com.EasyBytes.account.exception.ResourceNotFoundException;
+import com.EasyBytes.account.mapper.AccountMapper;
 import com.EasyBytes.account.mapper.CustomerMapper;
 import com.EasyBytes.account.repository.AccountRepository;
 import com.EasyBytes.account.repository.CustomerRepository;
@@ -37,6 +40,8 @@ public class AccountServiceImpl implements IAccountService {
 
     }
 
+
+
     private Account createNewAccount(Customer customer) {
         Account newAccount = new Account();
         newAccount.setCustomerIdf(customer.getCustomerId());
@@ -48,5 +53,18 @@ public class AccountServiceImpl implements IAccountService {
         newAccount.setCreatedAt(LocalDateTime.now());
         newAccount.setCreatedBy("ByAdmin");
         return newAccount;
+    }
+
+    @Override
+    public CustomerDTO fetchAccount(String mobileNumber) {
+         Customer customer= customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                 () -> new ResourceNotFoundException("Customer not found with ", "mobile number " , mobileNumber));
+
+        Account account=accountRepository.findByCustomerIdf(customer.getCustomerId()).orElseThrow(
+                () -> new ResourceNotFoundException("Account not found with ", "customer id " , customer.getCustomerId())
+        );
+        CustomerDTO customerDTO = CustomerMapper.mapToCustomerDto(customer, new CustomerDTO());
+        customerDTO.setAccountDto(AccountMapper.mapToAccountsDto(account, new AccountDTO()));
+        return customerDTO;
     }
 }
