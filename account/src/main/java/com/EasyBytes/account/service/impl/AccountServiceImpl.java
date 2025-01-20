@@ -67,4 +67,39 @@ public class AccountServiceImpl implements IAccountService {
         customerDTO.setAccountDto(AccountMapper.mapToAccountsDto(account, new AccountDTO()));
         return customerDTO;
     }
+
+    @Override
+    public boolean updateAccount(CustomerDTO customerDTO) {
+        boolean isUpdated = false;
+        AccountDTO accountDTO = customerDTO.getAccountDto();
+        if(accountDTO!=null) {
+            Account account = accountRepository.findById(accountDTO.getAccountNumber()).orElseThrow(
+                    () -> new ResourceNotFoundException("Account not found with ", "account number " , accountDTO.getAccountNumber()));
+            AccountMapper.mapToAccounts(accountDTO, account);
+            account= accountRepository.save(account);
+
+            Long customerIdf = account.getCustomerIdf();
+            Customer customer = customerRepository.findById(customerIdf).orElseThrow(
+                    () -> new ResourceNotFoundException("Customer not found with ", "customer id " , customerIdf));
+            CustomerMapper.mapToCustomer(customerDTO, customer);
+            customerRepository.save(customer);
+            isUpdated = true;
+        }
+        return isUpdated;
+    }
+
+    @Override
+    public boolean deleteAccount(String mobileNumber) {
+
+        Customer customer = customerRepository.findByMobileNumber(mobileNumber).orElseThrow(
+                () -> new ResourceNotFoundException("Customer not found with ", "mobile number " , mobileNumber)
+        );
+
+        accountRepository.deleteByCustomerIdf(customer.getCustomerId());
+        customerRepository.delete(customer);
+
+        return true;
+    }
+
+
 }
