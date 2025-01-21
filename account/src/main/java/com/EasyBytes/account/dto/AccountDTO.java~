@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AccountDTO {
 
-    @Pattern(regexp = "^[0-9]{10}", message = "Invalid Account number")
+    @Pattern(regexp = "[6-9][0-9]{10}", message = "Invalid Account number")
     @NotEmpty(message = "Account number is required")
     private Long accountNumber;
 

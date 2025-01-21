@@ -35,7 +35,7 @@ class AccountController {
 
     @GetMapping(path = "/fetch")
     public ResponseEntity<CustomerDTO> getAccount(@RequestParam
-                                                      @Pattern(regexp = "^[0-9]{10}", message = "Invalid mobile number")
+                                                      @Pattern(regexp = "[6-9][0-9]{10}", message = "Invalid mobile number")
                                                       String mobileNumber) {
         CustomerDTO customerDto= iAccountService.fetchAccount(mobileNumber);
         System.out.println(customerDto);
@@ -61,7 +61,7 @@ class AccountController {
 
     @DeleteMapping(path = "/delete")
     public ResponseEntity<ResponseDTO> deleteAccount(@RequestParam
-                                                         @Pattern(regexp = "^[0-9]{10}", message = "Invalid mobile number")
+                                                         @Pattern(regexp = "[6-9][0-9]{10}", message = "Invalid mobile number")
                                                          String mobileNumber) {
         boolean isDeleted = iAccountService.deleteAccount(mobileNumber);
         if(isDeleted) {

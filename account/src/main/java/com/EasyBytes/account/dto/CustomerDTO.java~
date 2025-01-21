@@ -20,7 +20,7 @@ public class CustomerDTO {
     @NotEmpty(message = "Email should not be empty")
     private String email;
 
-    @Pattern(regexp = "^[0-9]{10}", message = "Invalid mobile number")
+    @Pattern(regexp = "[6-9][0-9]{10}", message = "Invalid mobile number")
     @NotEmpty(message = "Mobile number should not be empty")
     private String mobileNumber;
 
