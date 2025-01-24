@@ -3,8 +3,6 @@ package com.EasyBytes.account.controller;
 import com.EasyBytes.account.constant.AccountsConstants;
 import com.EasyBytes.account.dto.CustomerDTO;
 import com.EasyBytes.account.dto.ResponseDTO;
-import com.EasyBytes.account.entities.Customer;
-import com.EasyBytes.account.repository.CustomerRepository;
 import com.EasyBytes.account.service.IAccountService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
@@ -14,8 +12,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @AllArgsConstructor

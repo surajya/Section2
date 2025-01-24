@@ -50,8 +50,6 @@ public class AccountServiceImpl implements IAccountService {
         newAccount.setAccountNumber(randomAccNumber);
         newAccount.setAccountType(AccountsConstants.SAVINGS);
         newAccount.setBranchAddress(AccountsConstants.ADDRESS);
-        newAccount.setCreatedAt(LocalDateTime.now());
-        newAccount.setCreatedBy("ByAdmin");
         return newAccount;
     }
 
