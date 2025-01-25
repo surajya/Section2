@@ -21,7 +21,10 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
 
 
-
+#springdoc:
+#  swagger-ui:
+#    path: /swagger-ui.html
+#    enabled: true
 
 
 
