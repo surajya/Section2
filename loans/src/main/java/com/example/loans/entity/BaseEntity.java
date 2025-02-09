@@ -1,5 +1,6 @@
 package com.example.loans.entity;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
@@ -16,22 +17,25 @@ import java.time.LocalDateTime;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@Getter @Setter @ToString
+@Getter
+@Setter
+@ToString
 public class BaseEntity {
 
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
-    @Column(insertable = false)
-    private LocalDateTime updatedAt;
-
     @CreatedBy
     @Column(updatable = false)
     private String createdBy;
 
+    @LastModifiedDate
+    @Column(insertable = false)
+    private LocalDateTime updatedAt;
+
     @LastModifiedBy
     @Column(insertable = false)
     private String updatedBy;
+
 }
